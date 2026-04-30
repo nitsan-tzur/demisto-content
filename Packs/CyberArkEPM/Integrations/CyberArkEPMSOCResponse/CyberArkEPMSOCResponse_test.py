@@ -104,7 +104,13 @@ def test_activate_multiple_endpoint_risk_plan_command(client, mocker):
 
     result = change_risk_plan_command(client, args)
     expected_outputs = [
-        {"SetID": "id1", "EndpointIDs": "endpoint_id2,endpoint_id2", "RiskPlan": "risk_plan1", "Action": "add", "GroupActionPerformed": True}
+        {
+            "SetID": "id1",
+            "EndpointIDs": "endpoint_id2,endpoint_id2",
+            "RiskPlan": "risk_plan1",
+            "Action": "add",
+            "GroupActionPerformed": True,
+        }
     ]
 
     assert result.outputs == expected_outputs
@@ -143,7 +149,13 @@ def test_deactivate_risk_plan_command(client, mocker):
 
     result = change_risk_plan_command(client, args)
     expected_outputs = [
-        {"SetID": "id1", "EndpointIDs": "endpoint_id1", "RiskPlan": "risk_plan1", "Action": "remove", "GroupActionPerformed": True}
+        {
+            "SetID": "id1",
+            "EndpointIDs": "endpoint_id1",
+            "RiskPlan": "risk_plan1",
+            "Action": "remove",
+            "GroupActionPerformed": True,
+        }
     ]
     assert result.outputs == expected_outputs
 
@@ -184,7 +196,13 @@ def test_change_risk_plan_no_group_found(client, mocker):
 
     result = change_risk_plan_command(client, args)
     expected_outputs = [
-        {"SetID": "id1", "EndpointIDs": "endpoint_id1", "RiskPlan": "nonexistent_plan", "Action": "add", "GroupActionPerformed": False}
+        {
+            "SetID": "id1",
+            "EndpointIDs": "endpoint_id1",
+            "RiskPlan": "nonexistent_plan",
+            "Action": "add",
+            "GroupActionPerformed": False,
+        }
     ]
     assert result.outputs == expected_outputs
 
@@ -239,11 +257,11 @@ def test_change_risk_plan_endpoints_in_multiple_sets(client, mocker):
         "http_request",
         side_effect=[
             {"endpoints": [{"id": "ep1"}]},  # search_endpoints: set_id1
-            [{"id": "group_id1"}],            # search_endpoint_group_id: set_id1
-            {},                               # add_endpoint_to_group: set_id1
+            [{"id": "group_id1"}],  # search_endpoint_group_id: set_id1
+            {},  # add_endpoint_to_group: set_id1
             {"endpoints": [{"id": "ep2"}]},  # search_endpoints: set_id2
-            [{"id": "group_id2"}],            # search_endpoint_group_id: set_id2
-            {},                               # add_endpoint_to_group: set_id2
+            [{"id": "group_id2"}],  # search_endpoint_group_id: set_id2
+            {},  # add_endpoint_to_group: set_id2
         ],
     )
 
@@ -281,10 +299,10 @@ def test_change_risk_plan_no_group_in_some_sets(client, mocker):
         "http_request",
         side_effect=[
             {"endpoints": [{"id": "ep1"}]},  # search_endpoints: set_id1
-            [{"id": "group_id1"}],            # search_endpoint_group_id: set_id1 -> found
-            {},                               # add_endpoint_to_group: set_id1
+            [{"id": "group_id1"}],  # search_endpoint_group_id: set_id1 -> found
+            {},  # add_endpoint_to_group: set_id1
             {"endpoints": [{"id": "ep2"}]},  # search_endpoints: set_id2
-            [],                               # search_endpoint_group_id: set_id2 -> not found
+            [],  # search_endpoint_group_id: set_id2 -> not found
         ],
     )
 
